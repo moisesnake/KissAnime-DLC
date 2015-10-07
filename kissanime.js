@@ -68,8 +68,10 @@ for (i = (episodeLinks.length - startEpisode); i >= (episodeLinks.length - endEp
     });
 }
 
-var newPageText = 'Kissanime<br /> \n'
-newPageText += 'Links:<br /> \n'
+var newPageText = 'Kissanime <br /> \n'
+#D5F406
+newPageText += '<style>body {}a {color: #D5F406;text-decoration: none;outline: medium none;}a:hover {color:#648f06;text-decoration:none;}html,body{font:normal 12px "Tahoma",Arial,Helvetica,sans-serif;line-height:18px;color:#dadada;background-color:#161616;}</style>'
+newPageText += 'Links: <br /> \n'
 newPageText += newLinks
 
 var newPage = window.open();
