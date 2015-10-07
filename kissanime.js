@@ -22,41 +22,11 @@ if (episodeLinks === 0 || episodeLinks === null) {
 $.ajaxSetup({async:false});
 $.getScript("http://kissanime.com/Scripts/asp.js");
 
-var startEpisode; 
-do {
-	startEpisode = prompt("Enter episode number you want to start from:");
-	if (startEpisode === null) {
-		throw new Error("Script cancelled by user!");
-	}
-	startEpisode = Number(startEpisode);
-	if (startEpisode <= 0 || startEpisode > episodeLinks.length) {
-		alert("Episode number must be greater than 0 and less than " + episodeLinks.length); 
-	} else {
-		break; 
-	}
-} while(true); 
-console.log('Starting episode: ' + startEpisode)
+var startEpisode = 1
 
-var endEpisode; 
-do {
-	endEpisode = prompt("Enter episode number you want to end at:");
-	if (endEpisode === null) {
-		throw new Error("Script cancelled by user!");
-	}
-	endEpisode = Number(endEpisode);
-	if (endEpisode <= 0 || endEpisode > episodeLinks.length || endEpisode < startEpisode) {
-		alert("Episode number must be greater than 0 and less than " + episodeLinks.length);
-	} else {
-		break;
-	}
-} while(true); 
-console.log('Ending episode: ' + endEpisode)
+var endEpisode = episodeLinks.length;
 
-var videoQuality = prompt("Enter video quality you want to download. Leave blank for default (1280x720.mp4)"); 
-//set preferred quality (will choose the best available if not an option)
-if (videoQuality === null || videoQuality == '') {
-	videoQuality = '1280x720.mp4';
-}
+var videoQuality = '1920x1080.mp4';
 
 var i;
 var long_url;
@@ -90,7 +60,7 @@ for (i = (episodeLinks.length - startEpisode); i >= (episodeLinks.length - endEp
 				long_url = downloadQualityOptions[0].attr('href');
 			}
 			console.log(c);
-			newLinks = newLinks + '<a href="' + long_url + '">Episode ' + c + ' (' + videoQuality + ')</a><br></br>\n';
+			newLinks = newLinks + '<a href="' + long_url + '" target="_blank">Episode ' + c + ' (' + videoQuality + ')</a><br></br>\n';
 			c++
         },
         async:   false, 
@@ -98,9 +68,8 @@ for (i = (episodeLinks.length - startEpisode); i >= (episodeLinks.length - endEp
     });
 }
 
-var newPageText = 'Use an addon like DownThemAll! to download the episodes on this page at once. '
-newPageText += 'To download them individually, right click the link and choose Save As. <br></br>'
-newPageText += 'NOTE: If watching episodes from this list, open them in a new tab as you will not be able to come back.<br></br>'
+var newPageText = 'Kissanime<br /> \n'
+newPageText += 'Links:<br /> \n'
 newPageText += newLinks
 
 var newPage = window.open();
