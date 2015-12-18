@@ -1,5 +1,5 @@
 var URL = window.location.origin
-/*
+
 // determine if user is on KissAnime and on the anime's main episode page
 if (window.location.href.indexOf("kissanime.com/") == -1) {
 	alert("You are not currently on KissAnime.");
@@ -10,7 +10,7 @@ if (window.location.href.indexOf("kissanime.com/") == -1) {
 	//fake function to cause script to terminate
 	AbortJavaScript();
 }
-*/
+
 var episodeLinks = $('table.listing a').map(function(i,el) { return $(el).attr('href'); });
 console.log('Found ' + episodeLinks.length + ' episode links on current page.')
 if (episodeLinks === 0 || episodeLinks === null) {
