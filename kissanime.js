@@ -1,23 +1,49 @@
-var URL = window.location.origin
+var URL = window.location.origin;
+var hostName = window.location.hostname;
+var fullURL = window.location.href;
 
 // determine if user is on KissAnime and on the anime's main episode page
-if (window.location.href.indexOf("kissanime.com/") == -1) {
-	alert("You are not currently on KissAnime.");
-	//fake function to cause script to terminate
-	AbortJavaScript();
-} else if (window.location.href.indexOf("kissanime.com/Anime/") == -1) {
-	alert("You are not on the Anime's main episode page.");
+if (hostName.search(/kissanime\.\w+/i) != -1){	
+	if (fullURL.search(/kissanime\.\w+\/Anime\//i) == -1) {
+		alert("You are not on the Anime's main episode page.");
+		//fake function to cause script to terminate
+		AbortJavaScript();
+	}
+}
+
+// determine if user is on KissCartoon and on the cartoon's main episode page
+else if (hostName.search(/kisscartoon\.\w+/i) != -1){
+	if (fullURL.search(/kisscartoon\.\w+\/Cartoon\//i) == -1) {
+		alert("You are not on the Cartoon's main episode page.");
+		//fake function to cause script to terminate
+		AbortJavaScript();
+	}
+}
+
+// determine if user is on KissAsian and on the drama's main episode page
+else if (hostName.search(/kissasian\.\w+/i) != -1){
+	if (fullURL.search(/kissasian\.\w+\/Drama\//i) == -1) {
+		alert("You are not on the Drama's main episode page.");
+		//fake function to cause script to terminate
+		AbortJavaScript();
+	}
+}
+
+else {
+	alert("You are not on a valid Kiss (Anime/Cartoon/Asian) site to use this script.");
 	//fake function to cause script to terminate
 	AbortJavaScript();
 }
 
+
 var episodeLinks = $('table.listing a').map(function(i,el) { return $(el).attr('href'); });
-console.log('Found ' + episodeLinks.length + ' episode links on current page.')
+console.log('Found ' + episodeLinks.length + ' episode links on current page.');
 if (episodeLinks === 0 || episodeLinks === null) {
-	alert("There are no episode links on this page.")
+	alert("There are no episode links on this page.");
 	//fake function to cause script to terminate
 	AbortJavaScript();
 }
+
 
 $.ajaxSetup({async:false});
 $.getScript("http://kissanime.com/Scripts/asp.js");
@@ -26,7 +52,7 @@ var startEpisode = 1
 
 var endEpisode = episodeLinks.length;
 
-var videoQuality = '1920x1080.mp4';
+var videoQuality = '1280x720.mp4';
 
 var i;
 var long_url;
@@ -59,7 +85,7 @@ for (i = (episodeLinks.length - startEpisode); i >= (episodeLinks.length - endEp
 				videoQuality = downloadQualityOptions[0].html();
 				long_url = downloadQualityOptions[0].attr('href');
 			}
-			console.log(c);
+			console.log('Completed: ' + c + '/' + (endEpisode - startEpisode + 1));
 			newLinks = newLinks + '<a href="' + long_url + '" target="_blank">Episode ' + c + ' (' + videoQuality + ')</a><br></br>\n';
 			c++
         },
