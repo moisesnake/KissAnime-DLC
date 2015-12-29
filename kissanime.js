@@ -35,7 +35,6 @@ else {
 	AbortJavaScript();
 }
 
-
 var episodeLinks = $('table.listing a').map(function(i,el) { return $(el).attr('href'); });
 console.log('Found ' + episodeLinks.length + ' episode links on current page.');
 if (episodeLinks === 0 || episodeLinks === null) {
@@ -44,9 +43,8 @@ if (episodeLinks === 0 || episodeLinks === null) {
 	AbortJavaScript();
 }
 
-
 $.ajaxSetup({async:false});
-$.getScript("http://kissanime.com/Scripts/asp.js");
+$.getScript(URL + "/Scripts/asp.js");
 
 var startEpisode = 1
 
@@ -60,37 +58,37 @@ var newLinks = '';
 var c = startEpisode;
 for (i = (episodeLinks.length - startEpisode); i >= (episodeLinks.length - endEpisode); i--) {
 	jQuery.ajax({
-        url:    URL + episodeLinks[i], 
+        url: URL + episodeLinks[i], 
         success: function(result) {
-            var $result = eval($(result));
-			var stringStart = result.search("var wra"); 
-			var stringEnd = result.search("document.write"); 
-			var javascriptToExecute = result.substring(stringStart, stringEnd);
-			eval(javascriptToExecute);
-			
-			$("body").append('<div id="episode' + i + '" style="display: none;"></div>')
-			$('#episode' + i).append(wra); 
-			
-			var downloadQualityOptions = $('#episode' + i + ' a').map(function(i,el) { return $(el); });
-			var j; 
-			var qualityFound = false;
-			for (j = 0; j < downloadQualityOptions.length; j++) {
-				if (videoQuality === downloadQualityOptions[j].html()) {
-					long_url = downloadQualityOptions[j].attr('href');
-					qualityFound = true;
-				} 
-			}
-			//if preferred quality is not found, defaults to highest quality
-			if (qualityFound == false){
-				videoQuality = downloadQualityOptions[0].html();
-				long_url = downloadQualityOptions[0].attr('href');
-			}
-			console.log('Completed: ' + c + '/' + (endEpisode - startEpisode + 1));
-			newLinks = newLinks + '<a href="' + long_url + '" target="_blank">Episode ' + c + ' (' + videoQuality + ')</a><br></br>\n';
-			c++
+        	var $result = eval($(result));
+		var stringStart = result.search("var wra"); 
+		var stringEnd = result.search("document.write"); 
+		var javascriptToExecute = result.substring(stringStart, stringEnd);
+		eval(javascriptToExecute);
+		
+		$("body").append('<div id="episode' + i + '" style="display: none;"></div>')
+		$('#episode' + i).append(wra); 
+		
+		var downloadQualityOptions = $('#episode' + i + ' a').map(function(i,el) { return $(el); });
+		var j; 
+		var qualityFound = false;
+		for (j = 0; j < downloadQualityOptions.length; j++) {
+			if (videoQuality === downloadQualityOptions[j].html()) {
+				long_url = downloadQualityOptions[j].attr('href');
+				qualityFound = true;
+			} 
+		}
+		//if preferred quality is not found, defaults to highest quality
+		if (qualityFound == false){
+			videoQuality = downloadQualityOptions[0].html();
+			long_url = downloadQualityOptions[0].attr('href');
+		}
+		console.log('Completed: ' + c + '/' + (endEpisode - startEpisode + 1));
+		newLinks = newLinks + '<a href="' + long_url + '" target="_blank">Episode ' + c + ' (' + videoQuality + ')</a><br></br>\n';
+		c++
         },
         async:   false, 
-		script:  true
+	script:  true
     });
 }
 
