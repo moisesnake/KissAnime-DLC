@@ -50,7 +50,12 @@ var startEpisode = 1
 
 var endEpisode = episodeLinks.length;
 
-var videoQuality = '1280x720.mp4';
+var videoQuality = prompt("Enter video quality you want to download. Leave blank for default (1280x720.mp4)"); 
+//set preferred quality (will choose the best available if not an option)
+if (videoQuality === null || videoQuality == '') {
+	videoQuality = '1280x720.mp4';
+}
+console.log('Selected quality: ' + videoQuality);
 
 var i;
 var long_url;
