@@ -12,7 +12,7 @@ USAGE
 ======================
 
 ```
-javascript:(function(){var%20script=window.document.createElement("script");script.src="https://raw.githubusercontent.com/moisesnake/KissAnime-DLC/master/kissanime.js";document.body.appendChild(script);window.document.getElementsByTagName("head")[0].appendChild(script);})();
+javascript:(function(){var%20script=window.document.createElement("script");script.src="https://rawgit.com/moisesnake/KissAnime-DLC/master/kissanime.js";document.body.appendChild(script);window.document.getElementsByTagName("head")[0].appendChild(script);})();
 ```
 1. Create a bookmarklet. Name it something you'll remember (KissAnime-DLC) and paste the above javascript in the 'Location' field.
 
